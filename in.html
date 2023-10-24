@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            background-image: url(pic.jpg);
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+        }
+        
+        .container {
+            position: relative;
+            top: 100px;
+            background-color: #fff;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .input-container {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 70px;
+            ;
+        }
+        
+        input[type="text"], input[type="date"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px;;
+        }
+        
+        button {
+            width: 25%;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        li:last-child {
+            border-bottom: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="input-container">
+            <input type="text" id="task" placeholder="Add a new task...">
+            <input type="date" id="date">
+            <button id="addTask">Add Task</button>
+        </div>
+        <ul id="taskList"></ul>
+        <button id="clearCompleted">Clear Completed</button>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const taskInput = document.getElementById("task");
+            const addTaskButton = document.getElementById("addTask");
+            const taskList = document.getElementById("taskList");
+            const clearCompletedButton = document.getElementById("clearCompleted");
+          
+            addTaskButton.addEventListener("click", function () {
+              const taskText = taskInput.value;
+          
+              if (taskText.trim() !== "") {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `
+                  <input type="checkbox">
+                  <span>${taskText}</span>
+                `;
+          
+                listItem.querySelector("input[type='checkbox']").addEventListener("change", function () {
+                  listItem.classList.toggle("completed", this.checked);
+                });
+          
+                taskList.appendChild(listItem);
+          
+                taskInput.value = "";
+              }
+            });
+          
+            clearCompletedButton.addEventListener("click", function () {
+              const completedTasks = Array.from(taskList.getElementsByClassName("completed"));
+              completedTasks.forEach(task => task.remove());
+            });
+          });
+           
+    </script>
+   
+</body>
+</html>
